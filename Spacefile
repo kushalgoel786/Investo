@@ -8,3 +8,4 @@ micros:
     run: uvicorn main:app
     public_routes:
       - "/"
+      - "/docs"
