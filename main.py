@@ -72,7 +72,7 @@ def get_latest_weekday(day):
 
 @app.get("/")
 async def root():
-    return "Working"
+    return "Live"
 
 
 @app.get("/mf/{scheme_code}")

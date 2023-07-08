@@ -10,3 +10,4 @@ micros:
       - "/"
       - "/docs"
       - "/openapi.json"
+      - "/mf"
