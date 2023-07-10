@@ -15,9 +15,22 @@ async def root():
 async def get_scheme_data(scheme_code: str):
     data = await client.fetch_scheme_data(scheme_code)
     if "error" not in data.keys():
-        return data["meta"]
+        scheme_data = data["meta"]
+        del scheme_data["scheme_type"]
+        del scheme_data["scheme_category"]
+        del scheme_data["fund_house"]
+        return scheme_data
     else:
         return data
+
+
+# @app.get("/mf/{scheme_code}/yearly")
+# async def get_yearly_returns(scheme_code: str):
+#     data = await client.fetch_scheme_data(scheme_code)
+#     if "error" not in data.keys():
+#         return master.get_yearly_returns(data["data"])
+#     else:
+#         return data
 
 
 @app.get("/mf/{scheme_code}/nav_history")
@@ -48,12 +61,12 @@ async def get_absolute_returns(scheme_code: str, start: date, end: date = date.t
         return master.get_returns(nav_data, start, end)
 
 
-@app.get("/mf/{scheme_code}/absolute")
-async def get_absolute(scheme_code: str, years: int):
-    data = await client.fetch_scheme_data(scheme_code)
-    if "error" not in data.keys():
-        nav_data = data["data"]
-        return master.get_absolute(nav_data, years)
+# @app.get("/mf/{scheme_code}/absolute")
+# async def get_absolute(scheme_code: str, years: int):
+#     data = await client.fetch_scheme_data(scheme_code)
+#     if "error" not in data.keys():
+#         nav_data = data["data"]
+#         return master.get_absolute(nav_data, years)
 
 
 @app.get("/mf/{scheme_code}/cagr")
