@@ -10,4 +10,7 @@ micros:
       - "/"
       - "/docs"
       - "/openapi.json"
-      - "/mf"
+      - "/mf/*"
+      - "/mf/*/nav"
+      - "/mf/*/nav_history"
+      - "/mf/*/returns"
