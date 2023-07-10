@@ -2,3 +2,4 @@ httpx
 fastapi
 uvicorn[standard]
 python-dateutil
+numpy
