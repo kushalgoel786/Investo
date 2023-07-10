@@ -1,12 +1,13 @@
 import httpx
 from datetime import datetime
+from app.client_error import ClientError
 
 
 async def fetch_scheme_data(scheme_code):
     base_url = "https://api.mfapi.in/mf/"
 
     if not scheme_code.isdigit() or len(scheme_code) != 6:
-        return {"error": "Invalid Scheme ID"}
+        raise ClientError("Invalid Scheme ID")
 
     try:
         async with httpx.AsyncClient() as client:
@@ -15,10 +16,10 @@ async def fetch_scheme_data(scheme_code):
             response_data = response.json()
 
             if len(response_data["meta"]) == 0:
-                return {"error": "Scheme ID Not Found"}
+                raise ClientError("Scheme ID Not Found")
 
             if not response_data["status"] == "SUCCESS":
-                return {"error": "Failure in Fetching Data"}
+                raise ClientError("Failure in Fetching Data")
 
             for item in response_data["data"]:
                 item["nav"] = float(item["nav"])
@@ -29,8 +30,8 @@ async def fetch_scheme_data(scheme_code):
             return response_data
 
     except httpx.RequestError as e:
-        return {"error": "Http Request Error"}
+        raise ClientError("Http Request Error")
 
     except httpx.HTTPStatusError as e:
-        return {"error": "Http Status Error"}
+        raise ClientError("Http Status Error")
 
