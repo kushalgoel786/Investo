@@ -1,65 +1,37 @@
 from datetime import date
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app import client
-from app import master
-from app.client_error import ClientError
+from app import service
 
 app = FastAPI()
 
 
 @app.get("/mf/{scheme_code}")
 async def get_scheme_data(scheme_code: str):
-    try:
-        data = await client.fetch_scheme_data(scheme_code)
-        scheme_data = data["meta"]
-        del scheme_data["scheme_type"]
-        del scheme_data["scheme_category"]
-        del scheme_data["fund_house"]
-        return scheme_data
-    except ClientError as e:
-        return {"error": e.message}
+    return await service.get_scheme_data(scheme_code)
 
 
 @app.get("/mf/{scheme_code}/nav")
 async def get_nav(scheme_code: str, on: date = date.today()):
-    try:
-        data = await client.fetch_scheme_data(scheme_code)
-        nav_data = data["data"]
-        nav = master.get_nav_on(nav_data, on)
-        return nav
-    except ClientError as e:
-        return {"error": e.message}
+    return await service.get_nav(scheme_code, on)
 
 
 @app.get("/mf/{scheme_code}/nav_history")
 async def get_nav_history(scheme_code: str):
-    try:
-        data = await client.fetch_scheme_data(scheme_code)
-        return data["data"]
-    except ClientError as e:
-        return {"error": e.message}
+    return await service.get_nav_history(scheme_code)
 
 
 @app.get("/mf/{scheme_code}/returns")
-async def get_absolute_returns(scheme_code: str, start: date, end: date = date.today()):
-    try:
-        data = await client.fetch_scheme_data(scheme_code)
-        nav_data = data["data"]
-        return master.get_returns(nav_data, start, end)
-    except ClientError as e:
-        return {"error": e.message}
+async def get_returns(scheme_code: str, start: date, end: date = date.today()):
+    return await service.get_returns(scheme_code, start, end)
+
+
+@app.get("/mf/{scheme_code}/yearly")
+async def get_yearly_returns(scheme_code: str):
+    return await service.get_yearly_returns(scheme_code)
 
 
 app.mount("/", StaticFiles(directory="static", html=True))  # , name="home")
-
-# @app.get("/mf/{scheme_code}/yearly")
-# async def get_yearly_returns(scheme_code: str):
-#     data = await client.fetch_scheme_data(scheme_code)
-#     if "error" not in data.keys():
-#         return master.get_yearly_returns(data["data"])
-#     else:
-#         return data
 
 
 # @app.get("/mf/{scheme_code}/absolute")

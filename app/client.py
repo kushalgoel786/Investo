@@ -3,6 +3,8 @@ from datetime import datetime
 from app.client_error import ClientError
 
 
+# TODO: Convert to a dictionary?
+# TODO: Add missing dates here only?
 async def fetch_scheme_data(scheme_code):
     base_url = "https://api.mfapi.in/mf/"
 
