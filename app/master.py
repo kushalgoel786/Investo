@@ -5,7 +5,6 @@ import numpy as np
 
 
 # # Good ----------------------------------
-# Awesome Calculation
 def get_nav_on(nav_data, target_date):
     """
     Can raise InvalidDateError.
@@ -38,7 +37,6 @@ def get_nav_on(nav_data, target_date):
     return nav_data[low]
 
 
-# Awesome Calculation
 def get_returns(nav_data, start_date, end_date):
     """
     Can raise InvalidDateError.
@@ -87,7 +85,6 @@ def get_yearly_returns(nav_data):
     return yearly_returns
 
 
-# Awesome Calculation
 def get_cagr(nav_data, years):
     nav_end = get_nav_on(nav_data, date.today())
     nav_start = get_nav_on(nav_data, nav_end["date"] - relativedelta(years=years))
@@ -128,13 +125,6 @@ def get_cagr(nav_data, years):
 #         }
 #
 #
-# def get_latest_weekday(day):
-#     if day.weekday() == 5:
-#         return day - relativedelta(days=1)
-#     elif day.weekday() == 6:
-#         return day - relativedelta(days=2)
-#     else:
-#         return day
 
 # def get_rolling(nav_data, start_date, years):
 #     rolling_returns = []
