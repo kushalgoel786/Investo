@@ -5,9 +5,19 @@ import numpy as np
 
 # Rolling Returns
 
+# Benchmark Everything
+
 
 # # Good ----------------------------------
+# Awesome Calculation
 def get_nav_on(nav_data, target_date):
+    """
+    Can raise InvalidDateError.
+
+    :param nav_data:
+    :param target_date:
+    :return:
+    """
     if target_date > date.today() or target_date < nav_data[-1]["date"]:
         raise InvalidDateError(str(date) + " is an Invalid Date")
 
@@ -32,7 +42,15 @@ def get_nav_on(nav_data, target_date):
     return nav_data[low]
 
 
+# Awesome Calculation
 def get_returns(nav_data, start_date, end_date):
+    """
+    Can raise InvalidDateError.
+    :param nav_data:
+    :param start_date:
+    :param end_date:
+    :return:
+    """
     if end_date < start_date:
         raise InvalidDateError("End date cannot be less than Start date")
 
@@ -46,7 +64,13 @@ def get_returns(nav_data, start_date, end_date):
     }
 
 
+# 2018 is problematic
 def get_yearly_returns(nav_data):
+    """
+    Throws no error
+    :param nav_data:
+    :return:
+    """
     start_year = nav_data[-1]["date"].year
     current_year = date.today().year
     yearly_returns = []
@@ -54,8 +78,6 @@ def get_yearly_returns(nav_data):
     for i in range(start_year, current_year + 1):
         first_date = date(i - 1, 12, 31)
         last_date = date(i, 12, 31)
-        print(first_date)
-        print(last_date)
 
         # Change first/last date for first/last year
         if i == start_year:
@@ -67,35 +89,23 @@ def get_yearly_returns(nav_data):
         returns = get_returns(nav_data, first_date, last_date)
         yearly_returns.append({str(i): returns})
     return yearly_returns
+
+
+# Awesome Calculation
+def get_cagr(nav_data, years):
+    nav_end = get_nav_on(nav_data, date.today())
+    nav_start = get_nav_on(nav_data, nav_end["date"] - relativedelta(years=years))
+
+    no_of_years = (nav_end["date"] - nav_start["date"]).days / 365
+    cagr = (((nav_end["nav"] / nav_start["nav"]) ** (1 / no_of_years)) - 1) * 100
+
+    return {
+        "return": cagr,
+        "years": years
+    }
 # # Good ----------------------------------
 
 
-# def get_cagr(nav_data, years):
-#     end_date = get_latest_weekday(date.today())
-#     nav_end_date = get_nav_on(nav_data, end_date)
-#     # Calculate returns from latest weekday to (latest weekday - no of years)
-#     start_date = nav_end_date["date"] - relativedelta(years=years)
-#
-#     # nav_start_date = get_nav_on(nav_data, start_date)
-#     nav_start_date = get_nav_on(nav_data, date(2018,7,7))
-#
-#     print(nav_end_date)
-#     print(nav_start_date)
-#
-#     if "error" in nav_end_date:
-#         return {"error": "Could Not Calculate CAGR"}
-#     elif "error" in nav_start_date:
-#         return {"error": "Scheme is not existing from " + str(years) + " years"}
-#     else:
-#         diff = end_date - date(2018, 7, 7)
-#         cagr = (((nav_end_date["nav"] / nav_start_date["nav"]) ** (1 / ((diff.days-2) / 365))) - 1) * 100
-#         return {
-#             "return": cagr,
-#             "to_date": nav_end_date["date"],
-#             "from_date": nav_start_date["date"],
-#         }
-#
-#
 # def get_standard_deviation(nav_data):
 #     nav_values = np.array([item["nav"] for item in nav_data])
 #     std_dev = np.std(nav_values)

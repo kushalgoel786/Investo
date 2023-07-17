@@ -16,7 +16,7 @@ async def get_nav(scheme_code: str, on: date = date.today()):
     return await service.get_nav(scheme_code, on)
 
 
-@app.get("/mf/{scheme_code}/nav_history")
+@app.get("/mf/{scheme_code}/nav/history")
 async def get_nav_history(scheme_code: str):
     return await service.get_nav_history(scheme_code)
 
@@ -26,14 +26,19 @@ async def get_returns(scheme_code: str, start: date, end: date = date.today()):
     return await service.get_returns(scheme_code, start, end)
 
 
-@app.get("/mf/{scheme_code}/yearly")
+@app.get("/mf/{scheme_code}/returns/yearly")
 async def get_yearly_returns(scheme_code: str):
     return await service.get_yearly_returns(scheme_code)
 
 
+@app.get("/mf/{scheme_code}/returns/cagr")
+async def get_cagr(scheme_code: str, years: int):
+    return await service.get_cagr(scheme_code, years)
+
 app.mount("/", StaticFiles(directory="static", html=True))  # , name="home")
 
 
+# get abs return for x years
 # @app.get("/mf/{scheme_code}/absolute")
 # async def get_absolute(scheme_code: str, years: int):
 #     data = await client.fetch_scheme_data(scheme_code)
@@ -41,10 +46,3 @@ app.mount("/", StaticFiles(directory="static", html=True))  # , name="home")
 #         nav_data = data["data"]
 #         return master.get_absolute(nav_data, years)
 
-
-# @app.get("/mf/{scheme_code}/cagr")
-# async def get_cagr(scheme_code: str, years: int):
-#     data = await client.fetch_scheme_data(scheme_code)
-#     if "error" not in data.keys():
-#         nav_data = data["data"]
-#         return master.get_cagr(nav_data, years)

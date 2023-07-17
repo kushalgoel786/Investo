@@ -7,10 +7,4 @@ micros:
     primary: true
     run: uvicorn main:app
     public_routes:
-      - "/"
-      - "/docs"
-      - "/openapi.json"
-      - "/mf/*"
-      - "/mf/*/nav"
-      - "/mf/*/nav_history"
-      - "/mf/*/returns"
+      - "/*"

@@ -54,3 +54,13 @@ async def get_yearly_returns(scheme_code: str):
         return master.get_yearly_returns(data["data"])
     except ClientError as e:
         return {"error": e.message}
+
+
+async def get_cagr(scheme_code: str, years: int):
+    try:
+        data = await client.fetch_scheme_data(scheme_code)
+        return master.get_cagr(data["data"], years)
+    except ClientError as e:
+        return {"error": e.message}
+    except InvalidDateError as e:
+        return {"error": "Scheme does not exist from " + str(years) + " years"}
