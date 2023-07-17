@@ -3,10 +3,6 @@ from app.invalid_date_error import InvalidDateError
 from dateutil.relativedelta import relativedelta
 import numpy as np
 
-# Rolling Returns
-
-# Benchmark Everything
-
 
 # # Good ----------------------------------
 # Awesome Calculation
@@ -64,7 +60,7 @@ def get_returns(nav_data, start_date, end_date):
     }
 
 
-# 2018 is problematic
+# annualised returns?
 def get_yearly_returns(nav_data):
     """
     Throws no error
@@ -73,7 +69,7 @@ def get_yearly_returns(nav_data):
     """
     start_year = nav_data[-1]["date"].year
     current_year = date.today().year
-    yearly_returns = []
+    yearly_returns = {}
 
     for i in range(start_year, current_year + 1):
         first_date = date(i - 1, 12, 31)
@@ -87,7 +83,7 @@ def get_yearly_returns(nav_data):
             last_date = date.today()
 
         returns = get_returns(nav_data, first_date, last_date)
-        yearly_returns.append({str(i): returns})
+        yearly_returns[str(i)] = returns["return"]
     return yearly_returns
 
 
