@@ -1,7 +1,39 @@
+body {
+  margin: 0;
+}
+
+#main {
+  font-family: sans-serif;
+  font-weight: lighter;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #dbedf8;
+  color: #164573;
+}
+
 h2 span {
   color: green;
 }
 
-body {
-  text-align: center;
+a {
+  color: #164573;
+  border: 2px solid #164573;
+  text-decoration: none;
+  padding: 4px 16px;
+  border-radius: 20px;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+  transition-property: color, background-color;
+}
+
+a:hover {
+  color: #dbedf8;
+  background-color: #164573;
+}
+
+span#heart {
+  color: #8c3333;
 }
