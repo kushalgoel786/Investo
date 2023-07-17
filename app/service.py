@@ -1,8 +1,8 @@
 import app.client as client
-from app.client_error import ClientError
+from app.errors.client_error import ClientError
 from datetime import date
 from app import master
-from app.invalid_date_error import InvalidDateError
+from app.errors.invalid_date_error import InvalidDateError
 
 
 async def get_scheme_data(scheme_code: str):

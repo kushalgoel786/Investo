@@ -1,6 +1,6 @@
 import httpx
 from datetime import datetime
-from app.client_error import ClientError
+from app.errors.client_error import ClientError
 
 
 # TODO: Convert to a dictionary?
