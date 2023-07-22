@@ -1,9 +1,9 @@
 body {
   margin: 0;
+  font-family: "Open Sans", sans-serif;
 }
 
 #main {
-  font-family: sans-serif;
   font-weight: lighter;
   min-height: 100vh;
   display: flex;
